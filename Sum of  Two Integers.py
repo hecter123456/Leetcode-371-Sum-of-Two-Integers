@@ -5,25 +5,24 @@ class unitest(unittest.TestCase):
         a = 1
         b = 2
         Output = 3
-        self.assertEqual(Solution().getSum(a,b),Output);
+        self.assertEqual(Solution().getSum(a,b),Output)
     def testMoveCase(self):
         a = 1
         b = 1
         Output = 2
-        self.assertEqual(Solution().getSum(a,b),Output);
-
+        self.assertEqual(Solution().getSum(a,b),Output)
+    def testNegetive(self):
+        a = -1
+        b = -1
+        Output = -2
+        self.assertEqual(Solution().getSum(a,b),Output)
 class Solution():
     def getSum(self, a, b):
-        ans = 0
-        move = 0
-        k = 0
-        while(a != 0 or b != 0 or move != 0):
-            ans |= ((a%2) ^ (b%2) ^ move) << k
-            move = ((a%2) & (b%2)) ^ ((a%2) & move) ^ (move & (b%2))
-            a = a >> 1
-            b = b >> 1
-            k += 1
-        return ans
+        MAX = 0x7FFFFFFF
+        mask = 0xFFFFFFFF
+        while(b):
+            a, b = (a ^ b) & mask, ((a & b) << 1) & mask
+        return a if a <= MAX else ~(a ^ mask)
 
 if __name__ == '__main__':
     unittest.main()
